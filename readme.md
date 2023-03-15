@@ -28,16 +28,20 @@ To get the most out of this tutorial, you need to have the following:
 
 1. Experience using Solidity.
 2. Familiarity with the most common smart contract concepts.
-3. Experience using the Remix IDE.
-4. Experience using Laika for testing your smart contract.
-5. Understanding of oracles and their use cases.
-6. Experience using the Celo plugin to deploy smart contracts.
+3. Familiarity with the ERC-20 Token standard and interfaces.
+4. Experience using the Remix IDE.
+5. Experience using Laika for testing your smart contract.
+6. Understanding of oracles and their use cases.
+7. Experience using the Celo plugin to deploy smart contracts.
 
 ### Requirements
 
 1. A web browser
 2. An internet connection
 3. The Celo plugin activated in Remix
+4. The Remix IDE
+5. The Metamask Extension Wallet
+6. A Metamask account with alfajores testnet tokens
 
 
 ## Smart Contract Development
@@ -128,9 +132,9 @@ We will now create the constructor of our smart contract:
 
 ```
 
-The constructor is used to initialize the `IWitnetPriceRouter`, `IWitnetPriceFeed`, and `owner` variables.
+The constructor is used to initialize the `witnetPriceRouter`, `celoUsdPrice`, and `owner` variables.
 
->**_Note_**: We initialize the IWitnetPriceFeed variable by calling the `updateCeloUsdPriceFeed()` method.
+>**_Note_**: We initialize the `celoUsdPrice` variable by calling the `updateCeloUsdPriceFeed()` method.
 
 #### The Receive Function
 
