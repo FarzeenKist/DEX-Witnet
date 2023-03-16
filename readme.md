@@ -1,4 +1,4 @@
-# Using the Witnet Celo Price Feed
+# How To Build a Decentralized Exchange Using the Witnet Celo Price Feed
 
 ## Table of Content
 - [Using the Witnet Celo Price Feed](#using-the-witnet-celo-price-feed)
