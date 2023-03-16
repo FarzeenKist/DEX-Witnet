@@ -27,12 +27,12 @@ In this tutorial, we will learn about how to integrate the Witnet Celo router an
 ## Prerequisites
 To get the most out of this tutorial, you need to have the following:
 
-1. Experience using Solidity.
+1. Experience using [Solidity](https://soliditylang.org/).
 2. Familiarity with the most common smart contract concepts.
-3. Familiarity with the ERC-20 Token standard.
-4. Knowledge of interfaces.
+3. Familiarity with the [ERC-20](https://ethereum.org/en/developers/docs/standards/tokens/erc-20/) Token standard.
+4. Knowledge of [interfaces](https://docs.soliditylang.org/en/v0.8.19/contracts.html#interfaces).
 5. Experience using the Remix IDE.
-6. Experience using Laika for testing your smart contract.
+6. Experience using [Laika](https://web.getlaika.app/) for testing your smart contract.
 7. Understanding of oracles and their use cases.
 8. Experience using the Celo plugin to deploy smart contracts.
 
@@ -168,7 +168,7 @@ We will now create the `updateCeloUsdPriceFeed()` function:
     }
 ```
 
-This function will be used to initialize(during deployment) and update the `celoUsdPrice` variable that stores an interface for the `ERC-165` compliant price feed smart contract of the **CELO/ USD** currency pair and this will allow us to use the interface to interact with the price feed smart contract. The `updateCeloUsdPriceFeed()` first fetches and stores the `ERC-165` price feed smart contract by passing the **price pair identifier** to the `getPriceFeed()` method of the Witnet Price Router that is used to fetch the price feed smart contract. Finally, we use an `if` statement to make sure that we only update the `celoUsdPrice` variable with an interface that is pointing to a valid and deployed smart contract.
+This function will be used to initialize(during deployment) and update the `celoUsdPrice` variable that stores an interface for the `ERC-165` compliant price feed smart contract of the **CELO/ USD** currency pair and this will allow us to use the interface to interact with the price feed smart contract. The `updateCeloUsdPriceFeed()` first fetches and stores the `ERC-165` price feed smart contract by passing the **price pair identifier** to the `getPriceFeed()` method of the Witnet Celo Router that is used to fetch the price feed smart contract. Finally, we use an `if` statement to make sure that we only update the `celoUsdPrice` variable with an interface that is pointing to a valid and deployed smart contract.
 
 
 #### The `getCeloUsdPrice()` Function
@@ -286,7 +286,7 @@ The last function we will create for our smart contract is the `forceCeloUsdUpda
     }
 ```
 
-The `forceCeloUsdUpdate()` function allows users to send a request to the CELO/USD price feed smart contract to update the currency pair's latest valid price. This function fetches the `ERC-165` compliant price feed smart contract of the CELO/USD pair and then calls its `estimateUpdateFee()` method to get the cost amount to create the request. The function then calls the `requestUpdate()` method of the price feed smart contract and passes the `_updateFee` retrieved to pay for the request. Finally, an `if` statement checks if the `msg.value` is greater than the `_updateFee`, and if it is true, the unused CELO sent is sent back to the `sender` of the transaction.
+The `forceCeloUsdUpdate()` function allows users to send a request to the CELO/USD price feed smart contract to update the currency pair's latest valid price. This function fetches the `ERC-165` compliant price feed smart contract of the CELO/USD pair and then calls its `estimateUpdateFee()` method to get the cost amount to create the request. The function then calls the `requestUpdate()` method of the CELO/USD price feed smart contract and passes the `_updateFee` retrieved to pay for the request. Finally, an `if` statement checks if the `msg.value` is greater than the `_updateFee`, and if it is true, the unused CELO sent is sent back to the `sender` of the transaction.
 
 
 ## Testing the Smart Contract Using Laika
@@ -294,6 +294,6 @@ The `forceCeloUsdUpdate()` function allows users to send a request to the CELO/U
 **Coming soon**
 ## Conclusion
 
-In this tutorial, you learned how to implement and interact with the Witnet Celo Router and CELO/USD price feed smart contracts. Throughout the tutorial, we successfully built a simple DEX that allows us to trade cUSD tokens for CELO tokens. 
+In this tutorial, you learned how to implement and interact with the Witnet Celo Router and the CELO/USD price feed smart contract. Throughout the tutorial, we successfully built a simple DEX that allows us to trade cUSD tokens for CELO tokens. 
 
 
