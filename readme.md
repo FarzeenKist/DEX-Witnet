@@ -4,8 +4,8 @@
 - [Using the Witnet Celo Price Feed](#using-the-witnet-celo-price-feed)
   - [Table of Content](#table-of-content)
   - [Introduction](#introduction)
-    - [Prerequisites](#prerequisites)
-    - [Requirements](#requirements)
+  - [Prerequisites](#prerequisites)
+  - [Requirements](#requirements)
   - [Smart Contract Development](#smart-contract-development)
     - [Imports and Interfaces](#imports-and-interfaces)
     - [Variables and Events](#variables-and-events)
@@ -22,30 +22,30 @@
 
 
 ## Introduction
-In this tutorial, we will use the Witnet Celo Price Feed router to fetch the CELO/USD currency pair that we will use in our smart contract `DExchange` where we will allow users to trade their cUSD(Celo Dollar) tokens with CELO tokens stored in our smart contract.
-### Prerequisites
+In this tutorial, we will use the [Witnet Celo Price Feed](https://docs.witnet.io/smart-contracts/witnet-data-feeds) router to fetch the CELO/USD currency pair that we will use in our smart contract `DExchange` where we will allow users to trade their cUSD(Celo Dollar) tokens with CELO tokens stored in our smart contract.
+## Prerequisites
 To get the most out of this tutorial, you need to have the following:
 
-1. Experience using Solidity.
-2. Familiarity with the most common smart contract concepts.
-3. Familiarity with the ERC-20 Token standard and interfaces.
-4. Experience using the Remix IDE.
-5. Experience using Laika for testing your smart contract.
-6. Understanding of oracles and their use cases.
-7. Experience using the Celo plugin to deploy smart contracts.
+- Experience using Solidity.
+- Familiarity with the most common smart contract concepts.
+- Familiarity with the ERC-20 Token standard and interfaces.
+- Experience using the Remix IDE.
+- Experience using [Laika](https://medium.com/laika-lab/introduction-to-hardhat-laika-45929073a4a2) for testing your smart contract.
+- Understanding of oracles and their use cases.
+- Experience using the Celo plugin to deploy smart contracts.
 
-### Requirements
+## Requirements
 
-1. A web browser
-2. An internet connection
-3. The Celo plugin activated in Remix
-4. The Remix IDE
-5. The Metamask Extension Wallet
-6. A Metamask account with alfajores testnet tokens
+- A web browser
+- An internet connection
+- The Celo plugin activated in Remix
+- The Remix IDE
+- The Metamask Extension Wallet
+- A Metamask account with [alfajores testnet tokens](https://docs.celo.org/wallet/faucet-testnet#:~:text=Visit%20faucet.celo.org%2C,additional%20CELO%20and%20stable%20tokens.)
 
 
 ## Smart Contract Development
-In this section, we will create the `DExchange` smart contract. To get started, open Remix and create a new file called `DExchange.sol`.
+In this section, we will create the `DExchange` smart contract. To get started, open [Remix](https://remix.ethereum.org/) and create a new file called `DExchange.sol`.
 
 ### Imports and Interfaces
 To use the Witnet Celo router and the CELO/USD price feed smart contract, we will need to make a few imports:
@@ -113,6 +113,7 @@ We also defined an event called `Exchange` that will be emitted when a user succ
 
 
 ### Functions
+In this section, we will explain what each function in our smart contract does.
 
 #### The Constructor
 
