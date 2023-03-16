@@ -22,17 +22,19 @@
 
 
 ## Introduction
-In this tutorial, we will use the Witnet Celo Price Feed router to fetch the CELO/USD currency pair that we will use in our smart contract `DExchange` where we will allow users to trade their cUSD(Celo Dollar) tokens with CELO tokens stored in our smart contract.
+In this tutorial, we will learn about how to integrate the Witnet Celo router and the CELO/USD price feed smart contract to fetch data about the currency pair that we will use in our example smart contract `DExchange` where we will create a simple DEX(Decentralized Exchange) that allows users to trade their cUSD(Celo Dollar) tokens with CELO tokens stored in the exchange.
+
 ### Prerequisites
 To get the most out of this tutorial, you need to have the following:
 
 1. Experience using Solidity.
 2. Familiarity with the most common smart contract concepts.
-3. Familiarity with the ERC-20 Token standard and interfaces.
-4. Experience using the Remix IDE.
-5. Experience using Laika for testing your smart contract.
-6. Understanding of oracles and their use cases.
-7. Experience using the Celo plugin to deploy smart contracts.
+3. Familiarity with the ERC-20 Token standard.
+4. Knowledge of interfaces.
+5. Experience using the Remix IDE.
+6. Experience using Laika for testing your smart contract.
+7. Understanding of oracles and their use cases.
+8. Experience using the Celo plugin to deploy smart contracts.
 
 ### Requirements
 
@@ -41,7 +43,7 @@ To get the most out of this tutorial, you need to have the following:
 3. The Celo plugin activated in Remix
 4. The Remix IDE
 5. The Metamask Extension Wallet
-6. A Metamask account with alfajores testnet tokens
+6. A Metamask account with Alfajores testnet cUSD and CELO tokens
 
 
 ## Smart Contract Development
