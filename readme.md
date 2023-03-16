@@ -4,8 +4,8 @@
 - [Using the Witnet Celo Price Feed](#using-the-witnet-celo-price-feed)
   - [Table of Content](#table-of-content)
   - [Introduction](#introduction)
-    - [Prerequisites](#prerequisites)
-    - [Requirements](#requirements)
+  - [Prerequisites](#prerequisites)
+  - [Requirements](#requirements)
   - [Smart Contract Development](#smart-contract-development)
     - [Imports and Interfaces](#imports-and-interfaces)
     - [Variables and Events](#variables-and-events)
@@ -24,7 +24,7 @@
 ## Introduction
 In this tutorial, we will learn about how to integrate the Witnet Celo router and the CELO/USD price feed smart contract to fetch data about the currency pair that we will use in our example smart contract `DExchange` where we will create a simple DEX(Decentralized Exchange) that allows users to trade their cUSD(Celo Dollar) tokens with CELO tokens stored in the exchange.
 
-### Prerequisites
+## Prerequisites
 To get the most out of this tutorial, you need to have the following:
 
 1. Experience using Solidity.
@@ -36,7 +36,8 @@ To get the most out of this tutorial, you need to have the following:
 7. Understanding of oracles and their use cases.
 8. Experience using the Celo plugin to deploy smart contracts.
 
-### Requirements
+
+## Requirements
 
 1. A web browser
 2. An internet connection
@@ -46,8 +47,9 @@ To get the most out of this tutorial, you need to have the following:
 6. A Metamask account with Alfajores testnet cUSD and CELO tokens
 
 
+
 ## Smart Contract Development
-In this section, we will create the `DExchange` smart contract. To get started, open Remix and create a new file called `DExchange.sol`.
+In this section, we will create the `DExchange` smart contract. To get started, open [Remix](https://remix.ethereum.org/) and create a new file called `DExchange.sol`.
 
 ### Imports and Interfaces
 To use the Witnet Celo router and the CELO/USD price feed smart contract, we will need to make a few imports:
@@ -115,6 +117,7 @@ We also defined an event called `Exchange` that will be emitted when a user succ
 
 
 ### Functions
+In this section, we will explain what each function in our smart contract does.
 
 #### The Constructor
 
