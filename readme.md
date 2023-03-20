@@ -1,6 +1,6 @@
 # Using the Witnet Celo Price Feed
 
-## Table of Content
+## Table of Contents:
 - [Using the Witnet Celo Price Feed](#using-the-witnet-celo-price-feed)
   - [Table of Content](#table-of-content)
   - [Introduction](#introduction)
@@ -22,16 +22,20 @@
 
 
 ## Introduction
-In this tutorial, we will learn about how to integrate the Witnet Celo router and the CELO/USD price feed smart contract to fetch data about the currency pair that we will use in our example smart contract `DExchange` where we will create a simple DEX(Decentralized Exchange) that allows users to trade their cUSD(Celo Dollar) tokens with CELO tokens stored in the exchange.
+In this tutorial, we will learn how to integrate the Witnet Celo router and the CELO/USD price feed smart contract to fetch data about the currency pair. We will use smart contract named `DExchange`in our example to create a simple DEX(Decentralized Exchange) that allows users to trade their cUSD(Celo Dollar) tokens with CELO tokens stored in the exchange.
 
 ## Prerequisites
 To get the most out of this tutorial, you need to have the following:
 
-1. Experience using [Solidity](https://soliditylang.org/).
-2. Familiarity with the most common smart contract concepts.
+1. Experience of using [Solidity](https://soliditylang.org/).
+2. Familiar with the most common smart contract concepts.
+   1. Conditional require statements,
+   2. Smart Contracts Events,
+   3. Scope of Functions like- public, payable, view, pure,
+   4. Mutability and immutability of state variables etc.
 3. Familiarity with the [ERC-20](https://ethereum.org/en/developers/docs/standards/tokens/erc-20/) Token standard.
 4. Knowledge of [interfaces](https://docs.soliditylang.org/en/v0.8.19/contracts.html#interfaces).
-5. Experience using the Remix IDE.
+5. Experience using the [Remix IDE](https://remix.ethereum.org/)
 6. Experience using [Laika](https://web.getlaika.app/) for testing your smart contract.
 7. Understanding of oracles and their use cases.
 8. Experience using the Celo plugin to deploy smart contracts.
