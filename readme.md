@@ -1,6 +1,6 @@
 # Using the Witnet Celo Price Feed
 
-## Table of Content
+## Table of Contents:
 - [Using the Witnet Celo Price Feed](#using-the-witnet-celo-price-feed)
   - [Table of Content](#table-of-content)
   - [Introduction](#introduction)
@@ -21,37 +21,40 @@
   - [Conclusion](#conclusion)
 
 
-## Introduction
-In this tutorial, we will learn about how to integrate the Witnet Celo router and the CELO/USD price feed smart contract to fetch data about the currency pair that we will use in our example smart contract `DExchange` where we will create a simple DEX(Decentralized Exchange) that allows users to trade their cUSD(Celo Dollar) tokens with CELO tokens stored in the exchange.
+## Introduction:
+In this tutorial, we will learn how to integrate the Witnet Celo router and the CELO/USD price feed smart contract to fetch data about the currency pair. We will use smart contract named `DExchange`in our example to create a simple DEX(Decentralized Exchange) that allows users to trade their cUSD(Celo Dollar) tokens with CELO tokens stored in the exchange.
 
-## Prerequisites
+## Prerequisites:
 To get the most out of this tutorial, you need to have the following:
 
-1. Experience using [Solidity](https://soliditylang.org/).
-2. Familiarity with the most common smart contract concepts.
+1. Experience of using [Solidity](https://soliditylang.org/).
+2. Familiar with the most common smart contract concepts.
+   1. Conditional require statements,
+   2. Smart Contracts Events,
+   3. Scope of Functions like- public, payable, view, pure,
+   4. Mutability and immutability of state variables etc.
 3. Familiarity with the [ERC-20](https://ethereum.org/en/developers/docs/standards/tokens/erc-20/) Token standard.
 4. Knowledge of [interfaces](https://docs.soliditylang.org/en/v0.8.19/contracts.html#interfaces).
-5. Experience using the Remix IDE.
+5. Experience using the [Remix IDE](https://remix.ethereum.org/)
 6. Experience using [Laika](https://web.getlaika.app/) for testing your smart contract.
 7. Understanding of oracles and their use cases.
 8. Experience using the Celo plugin to deploy smart contracts.
 
 
-## Requirements
+## Requirements:
 
 1. A web browser
-2. An internet connection
+2. A stable internet connection
 3. The Celo plugin activated in Remix
 4. The Remix IDE
-5. The Metamask Extension Wallet
+5. The [Metamask Extension Wallet](https://metamask.io/)
 6. A Metamask account with Alfajores testnet cUSD and CELO tokens
 
 
-
-## Smart Contract Development
+## Smart Contract Development:
 In this section, we will create the `DExchange` smart contract. To get started, open [Remix](https://remix.ethereum.org/) and create a new file called `DExchange.sol`.
 
-### Imports and Interfaces
+### Imports and Interfaces:
 To use the Witnet Celo router and the CELO/USD price feed smart contract, we will need to make a few imports:
 
 ```solidity
@@ -63,9 +66,9 @@ import "witnet-solidity-bridge/contracts/interfaces/IWitnetPriceRouter.sol";
 import "witnet-solidity-bridge/contracts/interfaces/IWitnetPriceFeed.sol";
 ```
 
-We first defined an SPDX license for our smart contract and the Solidity versions our compiler will be allowed to use. We then imported the `IWitnetPriceRouter` and `IwitnetPriceFeed` interfaces as we will need them in our smart contract to interact with the Witnet Celo Router and to fetch or force an update on the CELO/USD currency pair.
+We first defined an SPDX license for our smart contract and the Solidity version our compiler will be using. We then import the `IWitnetPriceRouter` and `IwitnetPriceFeed` interfaces as we will need them to interact with the **Witnet Celo Router** and to fetch or force an update on the CELO/USD currency pair.
 
-Next, we will also import the ERC-20 interface as we will need it to be able to interact with the cUSD smart contract:
+Next, we will also import the ERC-20 interface to interact with the cUSD smart contract:
 
 ```solidity
 interface IERC20Token {
@@ -90,42 +93,44 @@ interface IERC20Token {
 }
 ```
 
-### Variables and Events
+### Variables and Events:
 
-We will now work on the variables and events we make use of in our smart contract:
+We will now work on the variables and events that we make use of in our smart contract:
 
 ```solidity
 contract DExchange {
   IWitnetPriceRouter public immutable witnetPriceRouter;
-    IWitnetPriceFeed public celoUsdPrice;
+  IWitnetPriceFeed public celoUsdPrice;
 
-    address public owner;
-    address internal cUsdTokenAddress =
-        0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1;
-
-    event Exchange(address indexed sender, uint celoAmount, uint cUsdAmount);
+  address public owner;
+  address internal cUsdTokenAddress = 0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1;
+  
+  //@dev Successfully Exchanged Event
+  //@param address
+  //@param celoAmount
+  //@param cUsdAmount
+  event Exchange(address indexed sender, uint celoAmount, uint cUsdAmount);
 }
 ```
-We first defined our smart contract with the keyword `contract` followed by the name `DExchange`. Next, we created the following variables:
+We defined our smart contract with the keyword `contract` followed by the name `DExchange`. Next, we create the following variables:
 
-1. `witnetPriceRouter` - An initialized interface that allows us to interact and call functions of the deployed `WitnetPriceRouter` smart contract
-2. `celoUsdPrice` - An initialized interface that allows us to interact and call functions of the deployed CELO/USD price feed smart contract
-3. `owner` - An `address` variable that stores the address of the deployer
-4. `cUsdTokenAddress` - An `address` variable that stores the address of the cUSD smart contract
+1. `witnetPriceRouter` - An initialized interface to interact and call functions of the deployed `WitnetPriceRouter` smart contract.
+2. `celoUsdPrice` - An initialized interface to interact and call functions of the deployed CELO/USD price feed smart contract.
+3. `owner` - An `address` variable that stores the address of the deployer.
+4. `cUsdTokenAddress` - An `address` variable that stores the address of the cUSD smart contract.
 
 We also defined an event called `Exchange` that will be emitted when a user successfully trades his cUSD tokens for CELO using the `tradeCUsdToCelo()` function of our `DExchange` smart contract.
 
 
-### Functions
+### Functions:
 In this section, we will explain what each function in our smart contract does.
 
-#### The Constructor
-
+#### The Constructor:
 We will now create the constructor of our smart contract:
 
 ```solidity
     /**
-     * IMPORTANT: use the Celo Alfajores WitnetPriceRouter address here.
+     * IMPORTANT: use the Celo Alfajores WitnetPriceRouter address here- 0x6f8A7E2bBc1eDb8782145cD1089251f6e2C738AE
      * The link to the address is:
      * https://docs.witnet.io/smart-contracts/witnet-data-feeds/addresses/celo
      */
@@ -137,21 +142,25 @@ We will now create the constructor of our smart contract:
 
 ```
 
-The constructor is used to initialize the `witnetPriceRouter`, `celoUsdPrice`, and `owner` variables.
+The constructor initializes the `witnetPriceRouter`, `celoUsdPrice`, and `owner` variables.
 
 >**_Note_**: We initialize the `celoUsdPrice` variable by calling the `updateCeloUsdPriceFeed()` method.
 
-#### The Receive Function
+#### The Receive Function:
 
-Next, we will create the `receive()` as it will be used for calls made to the contract with empty calldata, such as plain CELO transfers. This function will also play an important role in making sure that the `forceCeloUsdUpdate()` function works properly.
+Next, we will create the `receive()` as it will be used for calls made to the contract with empty calldata, such as plain CELO transfers. This function also plays an major role in making sure that the `forceCeloUsdUpdate()` function works properly.
+It also allows users to send tokens to the contract.
 
 ```solidity
     receive() external payable {}
 ```
 
-#### The `updateCeloUsdPriceFeed()` Function
+#### The `updateCeloUsdPriceFeed()` Function:
 
 We will now create the `updateCeloUsdPriceFeed()` function:
+
+### IERC165:
+We will use a standard called ERC165 often appears when contract to contract interaction is needed.
 
 ```solidity
     /**
@@ -168,10 +177,10 @@ We will now create the `updateCeloUsdPriceFeed()` function:
     }
 ```
 
-This function will be used to initialize(during deployment) and update the `celoUsdPrice` variable that stores an interface for the `ERC-165` compliant price feed smart contract of the **CELO/ USD** currency pair and this will allow us to use the interface to interact with the price feed smart contract. The `updateCeloUsdPriceFeed()` first fetches and stores the `ERC-165` price feed smart contract by passing the **price pair identifier** to the `getPriceFeed()` method of the Witnet Celo Router that is used to fetch the price feed smart contract. Finally, we use an `if` statement to make sure that we only update the `celoUsdPrice` variable with an interface that is pointing to a valid and deployed smart contract.
+This function will initialize(during deployment) and update the `celoUsdPrice` variable that stores an interface for the [ERC-165](#ierc165) compliant price feed smart contract of the **CELO/ USD** currency pair. This will allow us to use the interface to interact with the price feed smart contract. The `updateCeloUsdPriceFeed()` first fetches and stores the `ERC-165` price feed smart contract by passing the **price pair identifier** to the `getPriceFeed()` method of the Witnet Celo Router that is used to fetch the price feed smart contract. Finally, we use an `if` statement to make sure that we only update the `celoUsdPrice` variable with an interface that is pointing to a valid and deployed smart contract.
 
 
-#### The `getCeloUsdPrice()` Function
+#### The `getCeloUsdPrice()` Function:
 
 Next up, we will create the `getCeloUsdPrice()` function:
 
@@ -188,13 +197,13 @@ Next up, we will create the `getCeloUsdPrice()` function:
     }
 ```
 
-The function is defined as `public` and `view` since we want to be able to use the function both **internally** and **externally** and only to read the state. It uses the `lastValue()` method of the price feed smart contract stored in `CeloUsdPrice` to fetch and return the following values:
+The function is defined as `public` and `view` since, we want to use the function both **internally** and **externally** and only to read the state. It uses the `lastValue()` method of the price feed smart contract stored in `CeloUsdPrice` to fetch and return the following values:
 
 1. `_lastPrice` - Last valid price reported back from the Witnet oracle.
 2. `_lastTimestamp` - Last valid price reported back from the Witnet oracle.
 
 
-#### The `tradeCUsdToCelo()` Function
+#### The `tradeCUsdToCelo()` Function:
 
 We will now create the `tradeCUsdToCelo()` function:
 
@@ -208,11 +217,10 @@ We will now create the `tradeCUsdToCelo()` function:
             msg.sender,
             address(this)
         );
-        require(amount >= 0.1 ether);
+        require(amount >= 0.1 ether, "The contract doesn't have sufficient allowance");
         (int _lastPrice, ) = getCeloUsdPrice();
-        uint celoAmount = (1 ether * amount) /
-            (uint(_lastPrice) * 0.000001 ether);
-        require(address(this).balance >= celoAmount);
+        uint celoAmount = (1 ether * amount) / (uint(_lastPrice) * 0.000001 ether);
+        require(address(this).balance >= celoAmount, "The user does not has sufficient balance for this transaction");
         require(
             IERC20Token(cUsdTokenAddress).transferFrom(
                 msg.sender,
@@ -243,7 +251,7 @@ Next, we carry out a check to make sure that the `DExchange` smart contract has 
 Finally, we transfer the CELO amount to the sender using the `.call()` method and ensure the transfer is successful. If nothing goes wrong, we emit the `Exchange` event.
 
 
-#### The `withdrawCUsd()` Function
+#### The `withdrawCUsd()` Function:
 
 We will now define the `withdrawCUsd()` function:
 
@@ -267,7 +275,7 @@ We will now define the `withdrawCUsd()` function:
 The `withdrawCUsd()` function allows the `owner` of the `DExchange` smart contract to withdraw the cUSD tokens stored inside the smart contract. This function essentially checks whether the `sender` of the transaction is the `owner`. If it evaluates to *true*, the function fetches the current cUSD balance of the smart contract and ensures there is a valid amount to withdraw. Finally, it transfers the cUSD tokens using the `transferFrom()` method of the cUSD smart contract.
 
 
-####  The `forceCeloUsdUpdate()` Function
+####  The `forceCeloUsdUpdate()` Function:
 
 The last function we will create for our smart contract is the `forceCeloUsdUpdate()` function:
 
@@ -275,12 +283,13 @@ The last function we will create for our smart contract is the `forceCeloUsdUpda
     /// Force update on the CELO / USD currency pair
     function forceCeloUsdUpdate() external payable {
         IERC165 _priceFeed = witnetPriceRouter.getPriceFeed(bytes4(0x9ed884be));
-        uint _updateFee = IWitnetPriceFeed(address(_priceFeed))
-            .estimateUpdateFee(tx.gasprice);
-        IWitnetPriceFeed(address(_priceFeed)).requestUpdate{
+        uint _updateFee = IWitnetPriceFeed(address(_priceFeed)).estimateUpdateFee(tx.gasprice);
+        IWitnetPriceFeed(address(_priceFeed)).requestUpdate
+        {
             value: _updateFee
         }();
-        if (msg.value > _updateFee) {
+        if (msg.value > _updateFee) 
+        {
             payable(msg.sender).transfer(msg.value - _updateFee);
         }
     }
@@ -289,10 +298,11 @@ The last function we will create for our smart contract is the `forceCeloUsdUpda
 The `forceCeloUsdUpdate()` function allows users to send a request to the CELO/USD price feed smart contract to update the currency pair's latest valid price. This function fetches the `ERC-165` compliant price feed smart contract of the CELO/USD pair and then calls its `estimateUpdateFee()` method to get the cost amount to create the request. The function then calls the `requestUpdate()` method of the CELO/USD price feed smart contract and passes the `_updateFee` retrieved to pay for the request. Finally, an `if` statement checks if the `msg.value` is greater than the `_updateFee`, and if it is true, the unused CELO sent is sent back to the `sender` of the transaction.
 
 
-## Testing the Smart Contract Using Laika
+## Testing the Smart Contract Using Laika:
 
 **Coming soon**
-## Conclusion
+
+## Conclusion:
 
 In this tutorial, you learned how to implement and interact with the Witnet Celo Router and the CELO/USD price feed smart contract. Throughout the tutorial, we successfully built a simple DEX that allows us to trade cUSD tokens for CELO tokens. 
 
