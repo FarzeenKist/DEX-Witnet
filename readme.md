@@ -177,7 +177,7 @@ We will use a standard called ERC165 often appears when contract to contract int
     }
 ```
 
-This function will initialize(during deployment) and update the `celoUsdPrice` variable that stores an interface for the `ERC-165` compliant price feed smart contract of the **CELO/ USD** currency pair. This will allow us to use the interface to interact with the price feed smart contract. The `updateCeloUsdPriceFeed()` first fetches and stores the `ERC-165` price feed smart contract by passing the **price pair identifier** to the `getPriceFeed()` method of the Witnet Celo Router that is used to fetch the price feed smart contract. Finally, we use an `if` statement to make sure that we only update the `celoUsdPrice` variable with an interface that is pointing to a valid and deployed smart contract.
+This function will initialize(during deployment) and update the `celoUsdPrice` variable that stores an interface for the [ERC-165](#ierc165) compliant price feed smart contract of the **CELO/ USD** currency pair. This will allow us to use the interface to interact with the price feed smart contract. The `updateCeloUsdPriceFeed()` first fetches and stores the `ERC-165` price feed smart contract by passing the **price pair identifier** to the `getPriceFeed()` method of the Witnet Celo Router that is used to fetch the price feed smart contract. Finally, we use an `if` statement to make sure that we only update the `celoUsdPrice` variable with an interface that is pointing to a valid and deployed smart contract.
 
 
 #### The `getCeloUsdPrice()` Function:
