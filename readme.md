@@ -256,14 +256,13 @@ Finally, we transfer the CELO amount to the sender using the `.call()` method an
 We will now define the `withdrawCUsd()` function:
 
 ```solidity
-    // Allows the deployer to withdraw cUSD tokens
+    /// Allows the deployer to withdraw cUSD tokens
     function withdrawCUsd() public payable {
         require(msg.sender == owner);
         uint amount = IERC20Token(cUsdTokenAddress).balanceOf(address(this));
         require(amount > 0, "No cUSD balance to withdraw.");
         require(
-            IERC20Token(cUsdTokenAddress).transferFrom(
-                address(this),
+            IERC20Token(cUsdTokenAddress).transfer(
                 msg.sender,
                 amount
             ),
@@ -272,7 +271,7 @@ We will now define the `withdrawCUsd()` function:
     }
 ```
 
-The `withdrawCUsd()` function allows the `owner` of the `DExchange` smart contract to withdraw the cUSD tokens stored inside the smart contract. This function essentially checks whether the `sender` of the transaction is the `owner`. If it evaluates to *true*, the function fetches the current cUSD balance of the smart contract and ensures there is a valid amount to withdraw. Finally, it transfers the cUSD tokens using the `transferFrom()` method of the cUSD smart contract.
+The `withdrawCUsd()` function allows the `owner` of the `DExchange` smart contract to withdraw the cUSD tokens stored inside the smart contract. This function essentially checks whether the `sender` of the transaction is the `owner`. If it evaluates to *true*, the function fetches the current cUSD balance of the smart contract and ensures there is a valid amount to withdraw. Finally, it transfers the cUSD tokens using the `transfer()` method of the cUSD smart contract.
 
 
 ####  The `forceCeloUsdUpdate()` Function
@@ -404,14 +403,13 @@ contract DExchange {
         emit Exchange(msg.sender, celoAmount, amount);
     }
 
-        // Allows the deployer to withdraw cUSD tokens
+    /// Allows the deployer to withdraw cUSD tokens
     function withdrawCUsd() public payable {
         require(msg.sender == owner);
         uint amount = IERC20Token(cUsdTokenAddress).balanceOf(address(this));
         require(amount > 0, "No cUSD balance to withdraw.");
         require(
-            IERC20Token(cUsdTokenAddress).transferFrom(
-                address(this),
+            IERC20Token(cUsdTokenAddress).transfer(
                 msg.sender,
                 amount
             ),
@@ -468,11 +466,14 @@ The `tradeCUsdToCelo()` can be tested by following the steps described:
 3. Save the current CELO balance of your wallet address to compare it later with the new balance.
 4. Next, go back to Laika and call the `getCeloUsdPrice()` price function and save the value for the `_lastPrice`
 5. Calculate and save the amount of CELO you should receive in `wei` for one cUSD by using this formula:
+ 
     ```solidity
     CELO = (1 ether * value) /
             (_lastPrice * 0.000001 ether)
     ```
+
     >**_Note_**: Do not forget to replace `value` by one cUSD and `_lastPrice` with the value you fetched in the previous step. You should also replace the `ether` values in the formula with the respective `wei` amount. Finally, to make things easier you can use the [Desmos](https://www.desmos.com/scientific) scientific calculator.
+
 6. Call the `tradeCUsdToCelo()` on Laika and confirm the transaction.
 7. Copy the transaction hash and go to the Celo Alfajores Explorer and paste in it. In the **Transaction Details**, you should see the CELO amount transferred and it should more or less be equal to the amount calculated in step 5.
 
