@@ -474,7 +474,7 @@ The `tradeCUsdToCelo()` can be tested by following the steps described:
     ```
     >**_Note_**: Do not forget to replace `value` by one cUSD and `_lastPrice` with the value you fetched in the previous step. You should also replace the `ether` values in the formula with the respective `wei` amount. Finally, to make things easier you can use the [Desmos](https://www.desmos.com/scientific) scientific calculator.
 6. Call the `tradeCUsdToCelo()` on Laika and confirm the transaction.
-7. Subtract the new CELO balance you now see in your Metamask wallet with the amount saved in step 3. It should be more or less equal to the amount saved in step 4 when converted to `wei`. 
+7. Copy the transaction hash and go to the Celo Alfajores Explorer and paste in it. In the **Transaction Details**, you should see the CELO amount transferred and it should more or less be equal to the amount calculated in step 5.
 
 ### Testing the `withdrawCUsd()` Function
 
