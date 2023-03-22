@@ -433,7 +433,7 @@ contract DExchange {
 ```
 
 ## Testing the Smart Contract Using Laika
-In this section, we will use Laika to test our smart contract and to ensure that everything is working accordingly.
+In this section, we will use Laika to test our smart contract to ensure everything works.
 
 ### Getting Started
 
@@ -448,47 +448,45 @@ To get started, complete the following steps:
 * Select the **New Request** option
 * Finally, paste your address and the ABI in the respective fields and click on the **Import** button
 
-A new contract folder should appear under **collections** which is essentially an interface we can use to test our deployed smart contract. It should now look similar to this:
-<!-- image collections go here -->
+A new contract folder should appear under **collections**. It is an interface we can use to interact with our deployed smart contract.
+
 
 ### Testing the `getCeloUsdPrice()` Function
 The `getCeloUsdPrice()` can easily be tested by calling the function and comparing the results with the latest valid price and timestamp being shown [here](https://feeds.witnet.io/feeds/celo-alfajores_celo-usd_6).
 
->**_Note_**: You can use the [EpochConverter](https://www.epochconverter.com/) website to get the relative time from the `_lastTimestamp`. As for converting the `_lastPrice` variable, simply divide it by `10 ** 6`.
+>**_Note_**: You can use the [EpochConverter](https://www.epochconverter.com/) website to get the relative time from the `_lastTimestamp`. As for converting the `_lastPrice` variable, you need to divide it by `10 ** 6`.
 
 ### Testing the `tradeCUsdToCelo()` Function
 
 The `tradeCUsdToCelo()` can be tested by following the steps described:
 
-1. Go to the cUSD smart contract page on the Celo Alfajores explorer using this [link](https://explorer.celo.org/alfajores/token/0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1/write-proxy)
-2. Copy the `DExchange` smart contract's address and use it as the argument for `spender` when calling the `approve()` function of the Proxy. To make testing easier, set `value` to one cUSD in wei
-    >**_Note_**: The Metamask Wallet Extension should pop up asking you to confirm the transaction. Make sure that the address used will be the one calling `tradeCUsdToCelo()` function
-3. Save the current CELO balance of your wallet address to compare it later with the new balance.
-4. Next, go back to Laika and call the `getCeloUsdPrice()` price function and save the value for the `_lastPrice`
-5. Calculate and save the amount of CELO you should receive in `wei` for one cUSD by using this formula:
+1. Go to the cUSD smart contract page on the Celo Alfajores explorer using this [link](https://explorer.celo.org/alfajores/token/0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1/write-proxy).
+2. Copy the `DExchange` smart contract's address and use it as the argument for `spender` when calling the `approve()` function. In this tutorial, we will set `value` to one cUSD in wei.
+    >**_Note_**: The Metamask Wallet Extension should pop up and ask you to confirm the transaction. Ensure that the address connected is the one that will call the `tradeCUsdToCelo()` function.
+3. Next, go back to Laika and call the `getCeloUsdPrice()` price function and save the value for the `_lastPrice`.
+4. Calculate and save the amount of CELO you should receive in `wei` for one cUSD by using this formula:
  
     ```solidity
     CELO = (1 ether * value) /
             (_lastPrice * 0.000001 ether)
     ```
 
-    >**_Note_**: Do not forget to replace `value` by one cUSD and `_lastPrice` with the value you fetched in the previous step. You should also replace the `ether` values in the formula with the respective `wei` amount. Finally, to make things easier you can use the [Desmos](https://www.desmos.com/scientific) scientific calculator.
+    >**_Note_**: Do not forget to replace `value` with one cUSD in wei, `_lastPrice` with the value you fetched in the previous step, and the `ether` values in the formula with the respective `wei` amount. Finally, you can use the [Desmos](https://www.desmos.com/scientific) scientific calculator to calculate the amount.
 
-6. Call the `tradeCUsdToCelo()` on Laika and confirm the transaction.
-7. Copy the transaction hash and go to the Celo Alfajores Explorer and paste in it. In the **Transaction Details**, you should see the CELO amount transferred and it should more or less be equal to the amount calculated in step 5.
+5. Call the `tradeCUsdToCelo()` on Laika and confirm the transaction.
+6. Copy the transaction hash, go to the Celo Alfajores Explorer, and paste it into the search field. In the **Transaction Details**, the CELO amount transferred should be approximately equal to the value saved in step four.
 
 ### Testing the `withdrawCUsd()` Function
 
 The `withdrawCUsd()` can be tested by performing the following steps:
 
-1. Go to the cUSD smart contract page on the Celo Alfajores explorer using this [link](https://explorer.celo.org/alfajores/token/0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1/read-proxy)
+1. Go to the cUSD smart contract page on the Celo Alfajores explorer using this [link](https://explorer.celo.org/alfajores/token/0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1/read-proxy).
 2. Copy the `DExchange` smart contract's address and use it as the argument when calling the `balanceOf()` function of the Proxy.
-3. Save the returned cUSD balance as we will need it later
-4. Now repeat steps two and three using your wallet's address which was used to deploy the `DExchange` smart contract
-5. Next, go back to Laika and call the `withdrawCUsd()` function of the `DExchange` smart contract
-6. Go back to the cUSD smart contract page and call the `balanceOf()` function again on the `DExchange` smart contract and your wallet's address
-7. The smart contract's cUSD balance should now be **zero** and your wallet's address cUSD balance should be greater than the amount you saved in step four
-8. Subtract the new amount of your wallet's address with the previous amount and the result of this subtraction should be equal to the smart contract's initial balance which you saved earlier
+3. Save the returned cUSD balance. We will need it later.
+4. Next, go back to Laika and call the `withdrawCUsd()` function of the `DExchange` smart contract.
+5. Go back to the cUSD smart contract page and call the `balanceOf()` function again on the `DExchange` smart contract.
+7. The smart contract's cUSD balance should now be **zero**. 
+8. Finally, copy the transaction hash, go to the Celo Alfajores Explorer, and paste it into the search field. In the **Transaction Details**, the cUSD amount transferred should be approximately equal to the value saved in step three.
 
 >**_Note_**: The wallet address you use should be the address you used to deploy the `DExchange` smart contract. Calling the `withdrawCUsd()` with a different address will cause the transaction to revert.
 
